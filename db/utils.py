@@ -13,6 +13,16 @@ def row_to_dict(row):
     return result
 
 
+def row_to_dict_with_field(row, fields):
+    result = {}
+    for column in row.__table__.columns:
+        camel_case_col_name = to_camel_case(column.name)
+        if camel_case_col_name in fields:
+            result[camel_case_col_name] = getattr(row, column.name)
+
+    return result
+
+
 def rows_to_list(rows):
     results = []
     for row in rows:
